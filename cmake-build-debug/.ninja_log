@@ -1,0 +1,7 @@
+# ninja log v6
+7	154	1731404271909176135	CMakeFiles/Quine_McCluskey_algorithm.dir/quine.c.o	3c0286e582d0f4b9
+3	72	1731404371940454588	build.ninja	36e1ca8742134b73
+6	368	1731404022605140320	CMakeFiles/Quine_McCluskey_algorithm.dir/quinecplusplus.cpp.o	304814facae94173
+4	61	1731404374896153439	CMakeFiles/Quine_McCluskey_algorithm.dir/quine.c.o	1f80a5240579bc3e
+6	364	1731404374897661927	CMakeFiles/Quine_McCluskey_algorithm.dir/quinecplusplus.cpp.o	d8d6e31f28cb9e63
+364	398	1731404375256048963	Quine_McCluskey_algorithm	2e7af99cdc0fd9a9

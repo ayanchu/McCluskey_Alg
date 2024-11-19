@@ -42,8 +42,7 @@ bool CombineAndGroup(List<List<string>> ImplicantsByOne)
             int esum = Convert.ToInt32(binCode, 2);
             return esum;
         }
-//Purpose of CompareString is to compare two string and change the unique char to '-'
-//like 000 and 001 = 00-
+
   private string CompareString(string str1, string str2)
         { 
             if (str1 == str2)

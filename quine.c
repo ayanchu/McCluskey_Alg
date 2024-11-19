@@ -1,6 +1,9 @@
  #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// #include <c++/v1/cstdlib>
 
-typedef char qc_t;
+ typedef char qc_t;
 
 static const qc_t TRUE  =    1;
 static const qc_t FALSE =    0;
@@ -21,7 +24,7 @@ static const qc_t DONTCARE = 2;
  * Will combine two terms into one, resulting in a new term in case both can be combined, NULL
  * otherwise.
  */
-const qc_t const *reduce(const qc_t const *term1, const qc_t const *term2, const size_t lenght) {
+const qc_t *reduce(const qc_t *term1, const qc_t *term2, const size_t length) {
    	int i;
    	int pos = -1;
     qc_t *newterm;
@@ -33,23 +36,23 @@ const qc_t const *reduce(const qc_t const *term1, const qc_t const *term2, const
     	return NULL;
     }
 
-	newterm = (qc_t *) malloc(sizeof(qc_t) * lenght);
+	newterm = (qc_t *) malloc(sizeof(qc_t) * length);
 
-   	for (i = 0; i < lenght; i++) {
+   	for (i = 0; i < length; i++) {
    		if (term1[i] != term2[i]) {
 			if (pos != -1) {
-   				// Terms have more than one difference, can't be combined
+
    				return NULL;
    			}
    			pos = i;
-   			newterm[i] = DONTCARE;	
+   			newterm[i] = DONTCARE;
    		} else {
    			newterm[i] = term1[i];
    		}
    	}
 
    	if (pos == -1) {
-   		// No change
+
    		free(newterm);
    		return NULL;
    	}
@@ -57,14 +60,14 @@ const qc_t const *reduce(const qc_t const *term1, const qc_t const *term2, const
    	return newterm;
 }
 
-const qc_t const **reduceall(const qc_t const **table, const int nterms, const int lenght) {
+const qc_t **reduceall(const qc_t **table, int nterms, int length) {
 	int i, j, pos;
-	// The new table will have at most nterms terms
+
 	qc_t const **newtable = (qc_t const **) malloc(sizeof(void *) * nterms);
 
 	DEBUG_ENTRY;
 	memset(newtable, 0, nterms);
-	
+
 	pos = 0;
 	for (i = 0; i < nterms; i++) {
 		for (j = 0; j < nterms; j++) {
@@ -72,7 +75,7 @@ const qc_t const **reduceall(const qc_t const **table, const int nterms, const i
 				continue;
 			}
 
-			const qc_t const *reduced = reduce(table[i], table[j], lenght);
+			const qc_t *reduced = reduce(table[i], table[j], length);
 			if (reduced != NULL) {
 				newtable[pos++] = reduced;
 			}
@@ -83,7 +86,7 @@ const qc_t const **reduceall(const qc_t const **table, const int nterms, const i
 	return newtable;
 }
 
-void printterm(const qc_t const *term, const size_t lenght) {
+void printterm(const qc_t *term, size_t length) {
 	int i;
 
 	DEBUG_ENTRY;
@@ -91,19 +94,19 @@ void printterm(const qc_t const *term, const size_t lenght) {
 	if (term == NULL) {
 		printf("unreducible");
 	} else {
-		for (i = 0; i < lenght; i++) {
+		for (i = 0; i < length; i++) {
 			if (term[i] == DONTCARE) {
 				printf("_");
 			} else {
 				printf("%i", term[i]);
 			}
-		}	
+		}
 	}
 
 	DEBUG_EXIT;
 }
 
-void printtable(const qc_t const **table, const int nterms, const int length) {
+void printtable(const qc_t **table, const int nterms, const int length) {
 	int i;
 
 	DEBUG_ENTRY;
@@ -124,7 +127,7 @@ void printtable(const qc_t const **table, const int nterms, const int length) {
 
 		DEBUG_PASS;
 		printterm(table[i], length);
-		
+
 		DEBUG_PASS;
 		printf("\n");
 	}
@@ -150,12 +153,12 @@ void inc(qc_t *term, int len) {
 }
 
 struct parse_output {
-	const qc_t const **table;
+	const qc_t **table;
 	int terms;
 	int vars;
 };
 
-const struct parse_output const *parse(const char const *values) {
+const struct parse_output *parse(const char *values) {
 	int ln2, lnv, i, vallen, pos = 0, nterms = 0;
 	qc_t const **table;
 	qc_t *cterm;
@@ -195,15 +198,19 @@ const struct parse_output const *parse(const char const *values) {
 	return output;
 }
 
-int main(int argc, char **argv) {
-	if (argc < 2) {
-		return;
-	}
 
-	const struct parse_output const *parse_output = parse(argv[1]);
-	
-	printtable(parse_output->table, parse_output->terms, parse_output->vars);
-
-	system("PAUSE");
-	return 0;
-}
+// #ifdef USE_C_MAIN
+//
+// int main(int argc, char **argv) {
+// 	if (argc < 2) {
+// 		return 1; // Return a non-zero value to indicate an error
+// 	}
+//
+// 	const struct parse_output *parse_output = parse(argv[1]);
+//
+// 	printtable(parse_output->table, parse_output->terms, parse_output->vars);
+//
+// 	system("PAUSE"); // This may not be portable; consider using getchar() for cross-platform compatibility
+// 	return 0; // Return 0 to indicate successful execution
+// }
+// #endif

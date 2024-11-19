@@ -1,0 +1,3 @@
+/Users/user/CLionProjects/Quine-McCluskey-algorithm/cmake-build-debug/CMakeFiles/Quine_McCluskey_algorithm.dir
+/Users/user/CLionProjects/Quine-McCluskey-algorithm/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/user/CLionProjects/Quine-McCluskey-algorithm/cmake-build-debug/CMakeFiles/rebuild_cache.dir

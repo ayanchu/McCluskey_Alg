@@ -1,4 +1,3 @@
-#  mimize a boolean function
 
 #include <iostream>
 #include <vector>
@@ -16,26 +15,26 @@ struct B_number{
 	bool used;
 };
 
-vector<vector<B_number> > table;	//original table
-vector<vector<B_number> > p_group;	//mid process table
-vector<vector<B_number> > final_group;	//final table
-vector<B_number> printed_numbers; //avoid printing the same final numbers 
+vector<vector<B_number> > table;
+vector<vector<B_number> > p_group;
+vector<vector<B_number> > final_group;
+vector<B_number> printed_numbers;
 
 //----------------------------------------------------------
-unsigned count_1s(unsigned number); //count the number of 1s in a number
-void print_binary(unsigned number);//print the number in binary
-void create_table();		//create original table sorted by the number of 1s
-void print_table();		//print the table
-B_number init_B_number(unsigned n,int d, bool u);//initialize a B_number
-void create_p_group();		//create mid process table
-void print_p_group();		//print it
-void print_p_binary(unsigned n, unsigned d);//print the mid table (with -'s)
-void create_final_group();		//create final table
-void print_final_group();		//print final table with -'s and unused terms
-bool is_printed(B_number n);		//dont print terms that were already printed
-void init();				//start the table making and printing
-void getinput();			//get input from user
-unsigned count_bits(unsigned n);	//min bits to represent a number
+unsigned count_1s(unsigned number);
+void print_binary(unsigned number);
+void create_table();
+void print_table();
+B_number init_B_number(unsigned n,int d, bool u);
+void create_p_group();
+void print_p_group();
+void print_p_binary(unsigned n, unsigned d);
+void create_final_group();
+void print_final_group();
+bool is_printed(B_number n);
+void init();
+void getinput();
+unsigned count_bits(unsigned n);
 //----------------------------------------------------------
 
 int main(int argc, char *argv[]) {
@@ -89,7 +88,7 @@ int main(int argc, char *argv[]) {
 	
 }
 
-/* counts 1s by getting the LSB (%2) and then shifting until 0 */
+
 unsigned count_1s(unsigned number) {
 	short bit =0;
 	int count = 0;
@@ -102,8 +101,7 @@ unsigned count_1s(unsigned number) {
 	}
 	return count;
 }
-/*get LSB, arrange it in array, the print array in reverse order so MSB is on
-the left */
+
 void print_binary(unsigned number) {
 	unsigned bits[MIN_BITS];
 	int count = 0;
@@ -116,8 +114,7 @@ void print_binary(unsigned number) {
 	for(int i=count-1;i>=0;i--)
 		cout<<bits[i];
 }
-/*creating first table: append current number to the array located in
-table[number of 1s f this number]*/
+
 void create_table() {
 	short tmp;
 	B_number temp_num;
@@ -144,7 +141,6 @@ void print_table() {
 		cout<<"\n-------------------------------------"<<endl;
 	}
 }
-/* initialize a B_number variable - like a constructor */
 B_number init_B_number(unsigned	n,int d, bool u) {
 	B_number num;
 	num.number = n;
@@ -152,9 +148,7 @@ B_number init_B_number(unsigned	n,int d, bool u) {
 	num.used = u;
 	return num;
 }
-/*like the original table, but the paring of numbers from the original table-
-dashes are represented by a 1. for example original A=0011 B=1011, new number 
-is -011 which is represented as C.number=A&B=0011,C.dashes=A^B=1000*/
+
 void create_p_group() {
 	short tmp;
 	B_number temp_num;
@@ -197,8 +191,7 @@ void print_p_group() {
 	}
 	
 }
-/*print a number such as -001; this allocates bits in an array dash=2 then 
-prints reverse array */
+
 void print_p_binary(unsigned n, unsigned d) {
 	unsigned bits[MIN_BITS];
 	int count = 0;
@@ -220,10 +213,7 @@ void print_p_binary(unsigned n, unsigned d) {
 			cout<<"-";
 	}
 }
-/*creates final table. works like p_group(). example; in p_group you have: 
-A=-001 B=-011 -> C= -0-1 which will be represented as 
-C.number=A&B=0001&0011=0001, and C.dashes=A^B^A.dashes=0001^0011^1000=1010. 
-Computation is done only when A.dashes = b.dashes*/
+
 void create_final_group() {
 	short tmp;
 	B_number temp_num;
@@ -253,8 +243,7 @@ void create_final_group() {
 		}
 	}
 }
-/*print all the values from the final table, except for duplicates.
-  print all the unused numbers from original table and mid process table*/
+
 void print_final_group() {
 	cout<<endl<<"FINAL:\n-------------------------------------"<<endl;
 	int i,j;
@@ -285,7 +274,6 @@ void print_final_group() {
 	}
 	cout<<"-------------------------------------"<<endl;
 }
-/*used to avoid printing duplicates that can exist in the final table*/
 bool is_printed(B_number n) {
 	for(int i=0;i<printed_numbers.size();i++)
 		if(n.number==printed_numbers[i].number && n.dashes == printed_numbers[i].dashes)
@@ -293,7 +281,6 @@ bool is_printed(B_number n) {
 	
 	return false;
 }
-/*initialize all table*/
 void init() {
 	table.resize(1);
 	p_group.resize(1);
@@ -319,7 +306,7 @@ void getinput() {
 		cout<<"> ";
 	}
 }
-/*return min number of bits a number is represented by. used for best output*/
+
 unsigned count_bits(unsigned n) {
 	short bit =0;
 	int count = 0;
